@@ -1,0 +1,875 @@
+CREATE TABLE TiposDeFuentes (
+	idTiposDeFuente INT PRIMARY KEY,
+	Nombre VARCHAR(100)
+);
+Insert into TiposDeFuentes(idTiposDeFuente, nombre) Values (1, 'Interno');
+Insert into TiposDeFuentes(idTiposDeFuente, nombre) Values (2, 'Externo');
+
+CREATE TABLE Fuentes (
+    idFuente SERIAL PRIMARY KEY,
+    Nombre VARCHAR(60) NOT NULL,
+    idTiposDeFuente INT NOT NULL,
+    FOREIGN KEY (idTiposDeFuente) REFERENCES TiposDeFuentes(idTiposDeFuente)
+);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Corresponsales de El Tiempo', 1);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Reuters', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Agencia EFE', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('AFP', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Entidades gubernamentales', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Organizaciones no gubernamentales', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Empresas', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Expertos', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Personas entrevistadas', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Residente local', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Anonimo', 2);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Periodista de otro diario', 1);
+Insert into Fuentes(Nombre, idTiposDeFuente) Values ('Negocio local', 2);
+INSERT INTO Fuentes(Nombre, idTiposDeFuente) VALUES ('Entrevistado de la industria', 2);
+INSERT INTO Fuentes(Nombre, idTiposDeFuente) VALUES ('Informe de investigación', 2);
+INSERT INTO Fuentes(Nombre, idTiposDeFuente) VALUES ('Informe gubernamental', 2);
+INSERT INTO Fuentes(Nombre, idTiposDeFuente) VALUES ('Experto en economía', 2);
+
+CREATE TABLE RedesSociales (
+    idRedSocial SERIAL PRIMARY KEY,
+    NombreUsuario VARCHAR(20) NOT NULL,
+    Url VARCHAR(50) NOT NULL
+);
+INSERT INTO RedesSociales (NombreUsuario, Url)
+VALUES
+    ('@Pedro1987', 'https://www.ejemplo1.com/'),
+    ('@Lorena1995', 'https://www.ejemplo2.com/'),
+    ('@Javier2010', 'https://www.ejemplo3.com/'),
+    ('@Andres_1998', 'https://www.ejemplo4.com/'),
+    ('@Lucia94', 'https://www.ejemplo5.com/'),
+    ('@Camila_1992', 'https://www.ejemplo6.com/'),
+    ('@Julian96', 'https://www.ejemplo7.com/'),
+    ('@Mariana_2001', 'https://www.ejemplo8.com/'),
+    ('@Alexandra90', 'https://www.ejemplo9.com/'),
+    ('@David_1985', 'https://www.ejemplo10.com/'),
+    ('@Isabella91', 'https://www.ejemplo11.com/'),
+    ('@Santiago93', 'https://www.ejemplo12.com/'),
+    ('@Laura1990', 'https://www.ejemplo13.com/'),
+    ('@Ricardo89', 'https://www.ejemplo14.com/'),
+    ('@Ana2003', 'https://www.ejemplo15.com/'),
+    ('@Juan_1999', 'https://www.ejemplo16.com/'),
+    ('@Paula88', 'https://www.ejemplo17.com/'),
+    ('@Carlos_2005', 'https://www.ejemplo18.com/'),
+    ('@Catalina92', 'https://www.ejemplo19.com/'),
+    ('@Gabriel87', 'https://www.ejemplo20.com/');
+
+CREATE TABLE Roles (
+    idRol SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Descripción VARCHAR(100) NOT NULL
+);
+INSERT INTO Roles (Nombre, Descripción)
+VALUES
+    ('Escritor', 'Persona encargada de crear el contenido literario del libro.'),
+    ('Ilustrador', 'Persona encargada de crear las ilustraciones que acompañan al texto.'),
+    ('Corrector', 'Persona encargada de revisar y corregir el texto para eliminar errores.'),
+    ('Editor', 'Persona encargada de coordinar el proceso editorial y supervisar el trabajo de los demás roles.');
+
+
+CREATE TABLE Autores (
+    idAutor SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(300) NOT NULL,
+    idRedSocial INT NULL,
+    idRol INT NOT NULL,
+    FOREIGN KEY (idRedSocial) REFERENCES RedesSociales(idRedSocial),
+    FOREIGN KEY (idRol) REFERENCES Roles(idRol)
+);
+
+INSERT INTO Autores (Nombre, Apellido, Descripcion, idRedSocial, idRol)
+VALUES
+    ('Pedro', 'Lopez', 'Escritor apasionado por la política internacional', 1, 1),
+    ('Lorena', 'Rodriguez', 'Periodista deportiva con experiencia en cobertura de eventos deportivos', 2, 2),
+    ('Javier', 'Gonzalez', 'Escritor especializado en temas de actualidad y política', 3, 1),
+    ('Andres', 'Fernandez', 'Escritor comprometido con la divulgación científica', 4, 1),
+    ('Lucia', 'Gomez', 'Crítica de cine y amante del cine clásico', 5, 3),
+    ('Camila', 'Sanchez', 'Investigadora en ciencias de la salud y bienestar', 6, 4),
+    ('Julian', 'Perez', 'Escritor con enfoque en análisis político y social', 7, 1),
+    ('Mariana', 'Martinez', 'Periodista especializada en noticias internacionales', 8, 2),
+    ('Alexandra', 'Diaz', 'Investigadora en ciencias ambientales y conservación', 9, 4),
+    ('David', 'Ruiz', 'Escritor de opinión y análisis político', 10, 1),
+    ('Isabella', 'Alvarez', 'Crítica de cine y experta en cine independiente', 11, 3),
+    ('Santiago', 'Romero', 'Escritor apasionado por la literatura clásica', 12, 1),
+    ('Laura', 'Castro', 'Escritora especializada en temas de educación y pedagogía', 13, 1),
+    ('Ricardo', 'Navarro', 'Investigador en ciencias sociales y políticas', 14, 4),
+    ('Ana', 'Ortega', 'Periodista deportiva con enfoque en fútbol', 15, 2),
+    ('Juan', 'Santos', 'Escritor comprometido con la divulgación científica', 16, 1),
+    ('Paula', 'Flores', 'Escritora apasionada por la literatura infantil', 17, 1),
+    ('Carlos', 'Cruz', 'Escritor especializado en temas de emprendimiento y negocios', 18, 1),
+    ('Catalina', 'Jimenez', 'Periodista de investigación y reportajes especiales', 19, 2),
+    ('Gabriel', 'Morales', 'Escritor con enfoque en análisis político y social', 20, 1);
+
+
+
+CREATE TABLE TiposContenidos (
+    idTipoContenido SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL
+);
+
+INSERT INTO TiposContenidos (Nombre)
+VALUES
+    ('Noticias'),
+    ('Artículos'),
+    ('Entrevistas'),
+    ('Reseñas'),
+    ('Reportajes'),    
+    ('Crónicas'),
+    ('Opinión'),
+    ('Humor'),
+    ('Investigación');
+
+CREATE TABLE ContenidosAudiovisuales (
+    idContenidoAudiovisual SERIAL PRIMARY KEY,
+    Url VARCHAR(50) NOT NULL,
+    FechaPublicacion DATE NULL,
+    idTipoContenido INT NOT NULL,
+    FOREIGN KEY (idTipoContenido) REFERENCES TiposContenidos(idTipoContenido)
+);
+INSERT INTO ContenidosAudiovisuales (Url, FechaPublicacion, idTipoContenido) VALUES
+('https://www.youtube.com/watch?v=abc123', '2022-01-01', 1),
+('https://www.youtube.com/watch?v=def456', '2022-02-14', 2),
+('https://www.youtube.com/watch?v=ghi789', '2022-03-23', 3),
+('https://www.youtube.com/watch?v=jkl012', '2022-04-30', 5),
+('https://www.youtube.com/watch?v=mno345', '2022-05-05', 2),
+('https://www.youtube.com/watch?v=pqr678', '2022-06-12', 7),
+('https://www.youtube.com/watch?v=stu901', '2022-07-04', 1),
+('https://www.youtube.com/watch?v=vwx234', '2022-08-08', 6),
+('https://www.youtube.com/watch?v=yza567', '2022-09-20', 3),
+('https://www.youtube.com/watch?v=bcd890', '2022-10-31', 8),
+('https://www.youtube.com/watch?v=efg123', '2022-11-25', 2),
+('https://www.youtube.com/watch?v=hij456', '2022-12-24', 3),
+('https://www.vimeo.com/klm789', '2023-01-15', 9),
+('https://www.vimeo.com/nop234', '2023-02-28', 2),
+('https://www.vimeo.com/qrs567', '2023-03-31', 1),
+('https://www.vimeo.com/tuv901', '2023-04-22', 5),
+('https://www.vimeo.com/wxy234', '2023-05-01', 5),
+('https://www.vimeo.com/zab567', '2023-06-05', 9),
+('https://www.vimeo.com/cde890', '2023-07-11', 3),
+('https://www.vimeo.com/fgi123', '2023-08-22', 7),
+('https://www.vimeo.com/jkl456', '2023-09-27', 6),
+('https://www.vimeo.com/mno789', '2023-10-31', 1),
+('https://www.vimeo.com/pqr234', '2023-11-16', 6),
+('https://www.vimeo.com/stu567', '2023-12-20', 3),
+('https://www.soundcloud.com/vwx901', '2024-01-07', 1),
+('https://www.soundcloud.com/yza234', '2024-02-18', 1),
+('https://www.soundcloud.com/bcd567', '2024-03-22', 3),
+('https://www.soundcloud.com/efg901', '2024-04-13', 1),
+('https://www.soundcloud.com/hij234', '2024-05-15', 2),
+('https://www.soundcloud.com/klm567', '2024-06-29', 8);
+
+CREATE TABLE Publicidades (
+    idPublicidad SERIAL PRIMARY KEY,
+    Url VARCHAR(50) NOT NULL,
+    Mensaje VARCHAR(80) NOT NULL,
+    idContenidoAudiovisual INT NOT NULL,
+    FOREIGN KEY (idContenidoAudiovisual) REFERENCES ContenidosAudiovisuales(idContenidoAudiovisual)
+);
+INSERT INTO Publicidades (Url, Mensaje, idContenidoAudiovisual) VALUES
+('https://www.anunciante1.com/publicidad1', '¡Descubre ya nuestro nuevo producto!', 2),
+('https://www.anunciante6.com/publicidad2', '¿Quieres ahorrar dinero en tus compras? ¡Visítanos!', 5),
+('https://www.anunciante2.com/publicidad1', 'La mejor oferta de la temporada en ropa de deporte', 7),
+('https://www.anunciante7.com/publicidad2', 'No te pierdas nuestra promoción de lanzamiento', 10),
+('https://www.anunciante3.com/publicidad1', '¿Buscas un coche nuevo? ¡Visítanos y encuentra el tuyo!', 13),
+('https://www.anunciante8.com/publicidad2', '¡Descubre nuestras ofertas en vehículos de ocasión!', 15),
+('https://www.anunciante4.com/publicidad1', '¡Hazte con nuestros productos exclusivos antes de que se agoten!', 18),
+('https://www.anunciante9.com/publicidad2', '¿Quieres un estilo único y original? ¡Descubre nuestra nueva colección!', 21),
+('https://www.anunciante5.com/publicidad1', '¡No te pierdas nuestra promoción especial para nuevos clientes!', 24),
+('https://www.anunciante10.com/publicidad2', '¿Quieres disfrutar del mejor cine en casa? ¡Entra y descúbrelo!', 27);
+
+CREATE TABLE Ciudades (
+    idCiudad SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL
+);
+
+INSERT INTO Ciudades (Nombre) VALUES
+('Bogotá'),
+('Medellín'),
+('Cali'),
+('Barranquilla'),
+('Cartagena'),
+('Cúcuta'),
+('Soledad'),
+('Ibagué'),
+('Bucaramanga'),
+('Santa Marta'),
+('Villavicencio'),
+('Valledupar'),
+('Pereira'),
+('Montería'),
+('Manizales'),
+('Pasto'),
+('Armenia'),
+('Neiva'),
+('Sincelejo'),
+('Popayán'),
+('Tunja'),
+('Riohacha'),
+('Yopal'),
+('Florencia'),
+('Quibdó'),
+('Mocoa'),
+('Leticia'),
+('San Andrés'),
+('Mitú'),
+('Puerto Carreño');
+
+
+CREATE TABLE Usuarios (
+    idUsuario SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    Contraseña VARCHAR(50) NOT NULL,
+    NumeroTelefono float NOT NULL
+);
+
+INSERT INTO Usuarios (Nombre, Apellido, Email, Contraseña, NumeroTelefono) VALUES
+('Ana', 'García', 'ana.garcia@gmail.com', 'contraseña123', 3151234567),
+('Juan', 'Pérez', 'juan.perez@gmail.com', 'abcd1234', 3202345678),
+('María', 'González', 'maria.gonzalez@ehotmail.com', '1234abcd', 3013456789),
+('Carlos', 'Rodríguez', 'carlos.rodriguez@hotmail.com', 'clave123', 3184567890),
+('Luisa', 'Hernández', 'luisa.hernandez@gmail.com', 'password', 3105678901),
+('Pedro', 'Díaz', 'pedro.diaz@yahoo.com', 'abc12345', 3216789012),
+('Laura', 'Sánchez', 'laura.sanchez@gmail.com', 'qwerty', 3007890123),
+('Miguel', 'Torres', 'miguel.torres@hotmail.com', 'contraseña1', 3178901234),
+('Valentina', 'Mendoza', 'valentina.mendoza@gmail.com', 'abcd1234', 3129012345),
+('Santiago', 'Ramírez', 'santiago.ramirez@yahoo.com', 'clave456', 3130123456),
+('Carolina', 'Gutiérrez', 'carolina.gutierrez@hotmail.com', 'password1', 3171234567),
+('Andrés', 'Castro', 'andres.castro@gmail.com', 'abcdef', 3002345678),
+('Camila', 'Suárez', 'camila.suarez@hotmail.com', '1234abcd', 3113456789),
+('José', 'López', 'jose.lopez@gmail.com', 'qwertyuiop', 3144567890),
+('Paula', 'Gómez', 'paula.gomez@hotmail.com', 'password123', 3195678901),
+('David', 'Herrera', 'david.herrera@gmail.com', 'contraseña1234', 3166789012),
+('Juliana', 'Jiménez', 'juliana.jimenez@yahoo.com', 'abcdefg', 3027890123),
+('Daniel', 'Orozco', 'daniel.orozco@yahoo.com', '123456', 3158901234),
+('Isabella', 'Duarte', 'isabella.duarte@hotmail.com', 'qwerty123', 3189012345),
+('Fernando', 'Vargas', 'fernando.vargas@hotmail.com', 'abcde12345', 3210123456),
+('Natalia', 'Muñoz', 'natalia.munoz@gmail.com', '12345678', 3241234567),
+('Mateo', 'Henao', 'mateo.henao@gmail.com', 'abcdef123', 3222345678),
+('Alejandra', 'Restrepo', 'alejandra.restrepo@yahoo.com', 'password1234', 3233456789),
+('Óscar', 'Giraldo', 'oscar.giraldo@hotmail.com', 'qwerty1234', 3244567890),
+('Valeria', 'Castellanos', 'valeria.castellanos@hotmail.com', 'contraseña12345', 3255678901),
+('Juan', 'Perez', 'jperez@gmail.com', 'abcd1234', 123456789),
+('Maria', 'Gomez', 'mgomez@hotmail.com', 'qwertyui', 234567890),
+('Pedro', 'Rodriguez', 'prodriguez@yahoo.com', 'asdfghjk', 345678901),
+('Laura', 'Martinez', 'lmartinez@gmail.com', 'zxcvbnm', 456789012),
+('Luis', 'Garcia', 'lgarcia@hotmail.com', 'poiuytrew', 567890123),
+('Ana', 'Ramirez', 'aramirez@gmail.com', 'lkjhgfds', 678901234),
+('Diego', 'Hernandez', 'dhernandez@yahoo.com', 'mnbvcxz', 789012345),
+('Carolina', 'Torres', 'ctorres@hotmail.com', 'ytrewq', 890123456),
+('Andres', 'Sanchez', 'asanchez@gmail.com', '123456', 901234567),
+('Juliana', 'Velez', 'jvelez@yahoo.com', '789012', 123456789);
+
+
+
+CREATE TABLE Publicaciones (
+    idPublicacion SERIAL PRIMARY KEY,
+    Titular VARCHAR(500) NOT NULL,
+    Subtitulo VARCHAR(500) NULL,
+    idFuente INT NULL,
+    idAutor INT NOT NULL,
+    idPublicidad INT NOT NULL,
+    idCiudad INT NOT NULL,
+    FOREIGN KEY (idFuente) REFERENCES Fuentes(idFuente),
+    FOREIGN KEY (idAutor) REFERENCES Autores(idAutor),
+    FOREIGN KEY (idCiudad) REFERENCES Ciudades(idCiudad),
+    FOREIGN KEY (idPublicidad) REFERENCES Publicidades(idPublicidad)
+);
+
+INSERT INTO Publicaciones (Titular, Subtitulo, idFuente, idAutor, idPublicidad, idCiudad)
+VALUES
+('El presidente anuncia nuevas medidas económicas', 'Paquete de medidas económicas', 5, 2, 3, 2),
+('Expertos alertan sobre el cambio climático', NULL, 6, 8, 1, 4),
+('Reporte revela aumento en la tasa de desempleo', 'Tasa de desempleo', 1, 3, 2, 3),
+('Nuevo estudio sugiere beneficios del ejercicio', 'Beneficios del ejercicio', 8, 5, 4, 5),
+('La empresa anuncia lanzamiento de nuevo producto', 'Nuevo producto innovador', 7, 11, 5, 6),
+('El cambio climático y su impacto en la economía global', 'Entrevista con expertos', 6, 9, 4, 1),
+('La importancia del sueño para la salud', NULL, 3, 1, 7, 10),
+('La tecnología y su impacto en la educación', 'Informe especial', 7, 5, 2, 9),
+('Las mejores recetas para una cena romántica', 'Recetas de cocina', 9, 11, 1, 8),
+('La crisis de los refugiados en Europa', 'Análisis y opinión', 2, 8, 5, 7),
+('Cómo prepararse para un maratón', NULL, 1, 2, 3, 1),
+('La música y sus beneficios para la salud mental', 'Salud mental', 4, 14, 9, 3),
+('Cómo ser más productivo en el trabajo', 'Consejos y herramientas', 1, 7, 6, 3),
+('La importancia del ejercicio para la salud', 'Salud y bienestar', 3, 20, 8, 9),
+('Nuevo estudio encuentra vínculo entre el consumo de café y la reducción del riesgo de enfermedades cardíacas', 'Investigación reciente', 1, 3, 6, 2),
+('El presidente de Colombia se reúne con líderes empresariales para discutir la reactivación económica', 'Reunión empresarial', 7, 16, 4, 4),
+('Nueva investigación encuentra que los perros pueden detectar el COVID-19 con una precisión del 94%',  'Investigación canina', 2, 8, 5, 4),
+('Nuevo informe encuentra que el cambio climático está afectando la producción de alimentos en todo el mundo', 'Impacto del cambio climático', 6, 12, 3, 5),
+('El primer ministro de Japón anuncia que el país reducirá sus emisiones de gases de efecto invernadero en un 46% para 2030', 'Anuncio del primer ministro', 1, 10, 7, 7),
+('Nuevo estudio encuentra que la actividad física regular puede reducir el riesgo de desarrollar enfermedades neurodegenerativas', 'Investigación sobre la actividad física', 4, 5, 9, 2);
+
+CREATE TABLE ContenidosAudioVisualesPublicaciones (
+    idPublicacion INT NOT NULL,
+    idContenidoAudiovisual INT NOT NULL,
+    PRIMARY KEY (idPublicacion, idContenidoAudiovisual),
+    FOREIGN KEY (idPublicacion) REFERENCES Publicaciones(idPublicacion),
+    FOREIGN KEY (idContenidoAudiovisual) REFERENCES ContenidosAudiovisuales(idContenidoAudiovisual)
+);
+
+
+INSERT INTO ContenidosAudioVisualesPublicaciones(idPublicacion, idContenidoAudiovisual)
+VALUES
+   (5, 26),
+    (18, 7),
+    (3, 21),
+    (7, 13),
+    (13, 30),
+    (14, 2),
+    (17, 20),
+    (2, 18),
+    (20, 15),
+    (1, 4),
+    (6, 28),
+    (11, 8),
+    (12, 17),
+    (4, 24),
+    (19, 5),
+    (16, 23),
+    (9, 3),
+    (8, 11),
+    (10, 6),
+    (15, 10),
+    (2, 25),
+    (1, 12),
+    (20, 14),
+    (18, 3),
+    (14, 16),
+    (3, 19),
+    (7, 4),
+    (4, 6),
+    (13, 1),
+    (5, 2),
+    (17, 8),
+    (11, 15),
+    (16, 13),
+    (2, 17),
+    (12, 9),
+    (19, 20),
+    (6, 11),
+    (10, 5),
+    (8, 7),
+    (15, 18);
+
+CREATE TABLE Países (
+    idPais SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL
+);
+INSERT INTO Países (Nombre) VALUES ('Alemania');
+INSERT INTO Países (Nombre) VALUES ('Argentina');
+INSERT INTO Países (Nombre) VALUES ('Brasil');
+INSERT INTO Países (Nombre) VALUES ('Canadá');
+INSERT INTO Países (Nombre) VALUES ('China');
+INSERT INTO Países (Nombre) VALUES ('España');
+INSERT INTO Países (Nombre) VALUES ('Estados Unidos');
+INSERT INTO Países (Nombre) VALUES ('Francia');
+INSERT INTO Países (Nombre) VALUES ('Italia');
+INSERT INTO Países (Nombre) VALUES ('Japón');
+INSERT INTO Países (Nombre) VALUES ('México');
+INSERT INTO Países (Nombre) VALUES ('Países Bajos');
+INSERT INTO Países (Nombre) VALUES ('Portugal');
+INSERT INTO Países (Nombre) VALUES ('Reino Unido');
+INSERT INTO Países (Nombre) VALUES ('Rusia');
+INSERT INTO Países (Nombre) VALUES ('Singapur');
+INSERT INTO Países (Nombre) VALUES ('Suecia');
+INSERT INTO Países (Nombre) VALUES ('Suiza');
+INSERT INTO Países (Nombre) VALUES ('Turquía');
+INSERT INTO Países (Nombre) VALUES ('Uruguay');
+
+CREATE TABLE DiariosInternacionales (
+    idDiarioInternacional SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    idPais INT NOT NULL,
+    FOREIGN KEY (idPais) REFERENCES Países(idPais)
+);
+
+INSERT INTO DiariosInternacionales (Nombre, idPais)
+VALUES
+    ('The Guardian', 14),
+    ('The Times', 14),
+    ('Le Monde', 8),
+    ('Le Figaro', 8),
+    ('Corriere della Sera', 9),
+    ('La Repubblica', 9),
+    ('Die Welt', 1),
+    ('Frankfurter Allgemeine Zeitung', 1),
+    ('El País', 6),
+    ('ABC', 6),
+    ('The New York Times', 7),
+    ('The Washington Post', 7),
+    ('The Wall Street Journal', 7),
+    ('Yomiuri Shimbun', 10),
+    ('The Asahi Shimbun', 10),
+    ('Folha de S.Paulo', 3),
+    ('O Globo', 3),
+    ('The Globe and Mail', 4),
+    ('The National Post', 4),
+    ('South China Morning Post', 5),
+    ('China Daily', 5),
+    ('El Universal', 11),
+    ('Reforma', 11),
+    ('De Telegraaf', 12),
+    ('NRC Handelsblad', 12),
+    ('Expresso', 13),
+    ('Público', 13),
+    ('The Straits Times', 16),
+    ('Aftonbladet', 17),
+    ('Dagens Nyheter', 17),
+    ('Tages-Anzeiger', 18),
+    ('Blick', 18),
+    ('Hürriyet', 19),
+    ('Milliyet', 19),
+    ('El Observador', 20),
+    ('La Diaria', 20);
+
+
+CREATE TABLE Visualizaciones (
+    idVisualizacion SERIAL PRIMARY KEY,
+    idUsuario INT NOT NULL,
+    idPublicacion INT NOT NULL,
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (idPublicacion) REFERENCES Publicaciones(idPublicacion)
+);
+
+INSERT INTO Visualizaciones(idUsuario, idPublicacion)
+VALUES
+    (14, 9),
+    (12, 2),
+    (19, 14),
+    (30, 18),
+    (21, 19),
+    (8, 7),
+    (28, 5),
+    (15, 11),
+    (22, 17),
+    (10, 1),
+    (9, 8),
+    (26, 3),
+    (13, 10),
+    (16, 6),
+    (4, 16),
+    (24, 13),
+    (27, 20),
+    (32, 4),
+    (6, 12),
+    (18, 15),
+    (7, 20),
+    (25, 2),
+    (3, 18),
+    (11, 5),
+    (23, 1),
+    (20, 9),
+    (1, 3),
+    (2, 6),
+    (5, 10),
+    (29, 16),
+    (31, 14),
+    (17, 7),
+    (21, 1),
+    (3, 8),
+    (27, 2),
+    (33, 11),
+    (34, 15),
+    (28, 18),
+    (20, 4),
+    (25, 13),
+    (33, 17),
+    (15, 16),
+    (10, 19),
+    (1, 6),
+    (11, 12),
+    (22, 14),
+    (7, 5),
+    (9, 1),
+    (16, 7),
+    (32, 2),
+    (24, 10),
+    (4, 8),
+    (26, 3),
+    (23, 18),
+    (6, 20),
+    (13, 9),
+    (5, 6),
+    (17, 4),
+    (21, 1),
+    (12, 11),
+    (31, 16),
+    (19, 14),
+    (2, 13);
+
+
+
+CREATE TABLE Noticias (
+    idNoticia INT PRIMARY KEY,
+    Cuerpo VARCHAR(500) NOT NULL,
+    idDiarioInternacional INT NOT NULL,
+    idPublicacion INT NOT NULL,
+    FOREIGN KEY (idDiarioInternacional) REFERENCES DiariosInternacionales(idDiarioInternacional),
+    FOREIGN KEY (idNoticia) REFERENCES publicaciones(idPublicacion)
+);
+
+INSERT INTO Noticias (idNoticia, Cuerpo, idDiarioInternacional, idPublicacion)
+VALUES
+    (1, 'El presidente anunció hoy un paquete de medidas para impulsar la economía del país.', 1, 1),
+    (2, 'Un grupo de expertos en medio ambiente alertó sobre el impacto del cambio climático en el planeta.', 2, 2),
+    (3, 'Un nuevo reporte del gobierno muestra un aumento en la tasa de desempleo del país.', 3, 3),
+    (4, 'Un estudio reciente sugiere que hacer ejercicio regularmente puede mejorar la salud mental y física.', 4, 4),
+    (5, 'La empresa líder en tecnología anunció hoy el lanzamiento de un nuevo producto innovador.', 5, 5),
+    (6, 'El cambio climático es una realidad que está afectando a la economía global de diversas formas. Expertos analizan el impacto que tiene en diferentes sectores y cómo se puede mitigar su efecto negativo.', 6, 6),
+    (7, 'Dormir bien es esencial para tener una buena salud física y mental. Un especialista explica los beneficios de dormir adecuadamente y da recomendaciones para lograr un sueño reparador.', 7, 7),
+    (8, 'La tecnología ha revolucionado la educación en los últimos años. En este artículo, se analiza su impacto en el aprendizaje de los estudiantes y se discuten las tendencias actuales en este campo.', 8, 8),
+    (9, 'Si quieres impresionar a tu pareja con una cena romántica, te presentamos las mejores recetas para hacer en casa. Desde platos principales hasta postres, estas ideas te ayudarán a crear una cena inolvidable.', 9, 9),
+    (10, 'La llegada masiva de refugiados a Europa ha sido uno de los mayores desafíos políticos y humanitarios de la región en los últimos años. Expertos analizan las causas de esta crisis y discuten posibles soluciones.', 10, 10),
+    (11, 'Correr un maratón es un gran desafío físico y mental. En este artículo, te ofrecemos consejos y recomendaciones para prepararte adecuadamente y lograr cruzar la línea de meta.', 11, 11),
+    (12, 'Escuchar música puede tener un impacto positivo en nuestra salud mental. En este artículo, se discuten los beneficios de la música en la terapia y cómo se puede utilizar para mejorar nuestra salud emocional.', 12, 12),
+    (13, 'Ser más productivo en el trabajo puede mejorar tu desempeño y ayudarte a alcanzar tus metas. En este artículo, te presentamos consejos y herramientas para aumentar tu productividad en el trabajo.', 13, 13),
+    (14, 'Hacer ejercicio regularmente es esencial para mantener una buena salud física y mental. En este artículo, se discuten los beneficios del ejercicio en diferentes aspectos de nuestra salud y se ofrecen recomendaciones para hacerlo adecuadamente.', 14, 14),
+    (15, 'Un nuevo estudio realizado por investigadores de la Universidad de Harvard ha encontrado un vínculo entre el consumo de café y la reducción del riesgo de enfermedades cardíacas. Según el estudio, las personas que consumen una cantidad moderada de café diariamente tienen un menor riesgo de sufrir enfermedades cardíacas.', 15, 15),
+    (16, 'El presidente de Colombia, Iván Duque, se reunió hoy con líderes empresariales para discutir la reactivación económica del país después de la pandemia de COVID-19. Durante la reunión, el presidente Duque y los líderes empresariales discutieron medidas para estimular el crecimiento económico y crear empleos.', 16, 16),
+    (17, 'Un nuevo estudio realizado por investigadores de la Universidad de Helsinki ha encontrado que los perros pueden detectar el COVID-19 con una precisión del 94%. Según el estudio, los perros entrenados son capaces de detectar el virus en muestras de sudor humano con una precisión del 94%.', 17, 17),
+    (18, 'Un nuevo informe del Panel Intergubernamental sobre Cambio Climático ha encontrado que el cambio climático está afectando la producción de alimentos en todo el mundo. Según el informe, los cambios en las temperaturas y las precipitaciones están teniendo un impacto significativo en los cultivos y la producción de alimentos en todo el mundo.', 18, 18),
+    (19, 'El primer ministro de Japón, Yoshihide Suga, anunció hoy que el país reducirá sus emisiones de gases de efecto invernadero en un 46% para 2030. Según el primer ministro, esta medida ayudará a Japón a cumplir con sus compromisos internacionales en la lucha contra el cambio climático.', 19, 19),
+    (20, 'Un nuevo estudio realizado por investigadores de la Universidad de California ha encontrado que la actividad física regular puede reducir el riesgo de desarrollar enfermedades neurodegenerativas como la enfermedad de Alzheimer. Según el estudio, las personas que hacen ejercicio regularmente tienen un menor riesgo de desarrollar enfermedades neurodegenerativas en la edad avanzada.', 20, 20);
+
+CREATE TABLE NoticiasGuardadas (
+    idNoticia INT NOT NULL,
+    idUsuario INT NOT NULL,
+    FechaGuardado DATE NOT NULL,
+    PRIMARY KEY (idNoticia, idUsuario),
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (idNoticia) REFERENCES Noticias(idNoticia)
+);
+
+INSERT INTO NoticiasGuardadas (idNoticia, idUsuario, FechaGuardado)
+VALUES
+    (1, 21, '2023-05-15'),
+    (2, 22, '2023-05-14'),
+    (3, 23, '2023-05-13'),
+    (4, 24, '2023-05-12'),
+    (5, 25, '2023-05-11'),
+    (6, 26, '2023-05-10'),
+    (7, 27, '2023-05-09'),
+    (8, 28, '2023-05-08'),
+    (9, 29, '2023-05-07'),
+    (10, 30, '2023-05-06'),
+    (11, 31, '2023-05-05'),
+    (12, 32, '2023-05-04'),
+    (13, 33, '2023-05-03'),
+    (14, 34, '2023-05-02'),
+    (15, 35, '2023-05-01'),
+    (16, 5, '2023-04-30'),
+    (17, 4, '2023-04-29'),
+    (18, 3, '2023-04-28'),
+    (19, 2, '2023-04-27'),
+    (20, 1, '2023-04-26'),
+    (11, 12, '2023-04-15'),
+    (12, 16, '2023-04-14'),
+    (13, 1, '2023-04-13'),
+    (14, 4, '2023-04-12'),
+    (15, 5, '2023-04-11'),
+    (16, 26, '2023-04-10'),
+    (17, 7, '2023-04-09'),
+    (18, 15, '2023-04-08'),
+    (19, 12, '2023-04-07'),
+    (20, 11, '2023-04-06'),
+    (1, 10, '2023-04-05'),
+    (2, 14, '2023-04-04'),
+    (3, 24, '2023-04-03'),
+    (4, 26, '2023-04-02'),
+    (5, 27, '2023-04-01'),
+    (6, 28, '2023-03-31'),
+    (7, 29, '2023-03-30'),
+    (8, 30, '2023-03-29'),
+    (9, 21, '2023-03-28'),
+    (10, 3, '2023-03-27');
+
+CREATE TABLE PalabrasClaves (
+    idPalabraClave SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Descripción VARCHAR(200) NOT NULL 
+);
+
+INSERT INTO PalabrasClaves(Nombre, Descripción)
+VALUES
+('Política', 'Noticias relacionadas con asuntos políticos y gobiernos'),
+('Internacional', 'Noticias sobre eventos y acontecimientos internacionales'),
+('Deportes', 'Noticias sobre eventos deportivos y competiciones'),
+('Cultura', 'Noticias relacionadas con arte, música, cine y otras expresiones culturales'),
+('Tecnología', 'Noticias sobre avances y novedades tecnológicas'),
+('Ciencia', 'Noticias sobre descubrimientos y avances científicos'),
+('Economía', 'Noticias relacionadas con el ámbito económico y financiero'),
+('Entretenimiento', 'Noticias sobre espectáculos, famosos y eventos de entretenimiento'),
+('Salud', 'Noticias sobre temas de salud y bienestar'),
+('Opinión', 'Noticias que presentan opiniones y puntos de vista de los columnistas y expertos'),
+('Educación', 'Noticias relacionadas con temas de educación y pedagogía'),
+('Medio Ambiente', 'Noticias sobre temas ambientales y conservación'),
+('Tendencias', 'Noticias sobre tendencias actuales en moda, estilo de vida y cultura popular'),
+('Negocios', 'Noticias relacionadas con el mundo empresarial y emprendimiento'),
+('Viajes', 'Noticias y recomendaciones sobre destinos y experiencias de viaje'),
+('Gastronomía', 'Noticias y artículos sobre cocina, restaurantes y alimentos'),
+('Tecnología', 'Noticias sobre gadgets, dispositivos electrónicos y avances tecnológicos'),
+('Debates', 'Noticias que presentan debates y opiniones divergentes sobre un tema'),
+('Arquitectura', 'Noticias y proyectos destacados en el campo de la arquitectura y el diseño'),
+('Investigación', 'Noticias sobre investigaciones científicas y descubrimientos académicos');
+
+CREATE TABLE EtiquetasNoticias (
+    idNoticia INT NOT NULL,
+    idPalabraClave INT NOT NULL,
+    PRIMARY KEY (idNoticia, idPalabraClave),
+    FOREIGN KEY (idNoticia) REFERENCES Noticias(idNoticia),
+    FOREIGN KEY (idPalabraClave) REFERENCES PalabrasClaves(idPalabraClave)
+);
+
+INSERT INTO EtiquetasNoticias (idNoticia, idPalabraClave)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8),
+    (9, 9),
+    (10, 10),
+    (11, 11),
+    (12, 12),
+    (13, 13),
+    (14, 14),
+    (15, 15),
+    (16, 16),
+    (17, 17),
+    (18, 18),
+    (19, 19),
+    (20, 20);
+
+
+CREATE TABLE Categorías (
+idCategoría SERIAL PRIMARY KEY,
+Nombre VARCHAR(50) NOT NULL
+);
+
+INSERT INTO Categorías (Nombre) VALUES ('Noticias');
+INSERT INTO Categorías (Nombre) VALUES ('Deportes');
+INSERT INTO Categorías (Nombre) VALUES ('Entretenimiento');
+INSERT INTO Categorías (Nombre) VALUES ('Economía');
+INSERT INTO Categorías (Nombre) VALUES ('Ciencia');
+INSERT INTO Categorías (Nombre) VALUES ('Salud');
+INSERT INTO Categorías (Nombre) VALUES ('Tecnología');
+
+CREATE TABLE Secciones (
+idSección SERIAL PRIMARY KEY,
+Nombre VARCHAR(50) NOT NULL);
+
+INSERT INTO Secciones (Nombre) VALUES ('Política');
+INSERT INTO Secciones (Nombre) VALUES ('Internacional');
+INSERT INTO Secciones (Nombre) VALUES ('Fútbol');
+INSERT INTO Secciones (Nombre) VALUES ('Baloncesto');
+INSERT INTO Secciones (Nombre) VALUES ('Cine');
+INSERT INTO Secciones (Nombre) VALUES ('Música');
+INSERT INTO Secciones (Nombre) VALUES ('Finanzas');
+INSERT INTO Secciones (Nombre) VALUES ('Mercados');
+INSERT INTO Secciones (Nombre) VALUES ('Medicina');
+INSERT INTO Secciones (Nombre) VALUES ('Tecnología');
+INSERT INTO Secciones (Nombre) VALUES ('Educación');
+INSERT INTO Secciones (Nombre) VALUES ('Salud');
+
+CREATE TABLE ClasificacionesNoticias (
+    idNoticia INT NOT NULL,
+    idSección INT NOT NULL,
+    PRIMARY KEY (idNoticia, idSección),
+    FOREIGN KEY (idNoticia) REFERENCES Noticias(idNoticia),
+    FOREIGN KEY (idSección) REFERENCES Secciones(idSección)
+);
+
+INSERT INTO ClasificacionesNoticias (idNoticia, idSección)
+VALUES
+    (1, 1),
+    (1, 2),
+    (2, 1),
+    (2, 6),
+    (3, 1),
+    (4, 6),
+    (5, 7),
+    (6, 10),
+    (7, 4),
+    (8, 11),
+    (9, 3),
+    (10, 1),
+    (11, 12),
+    (12, 3),
+    (13, 7),
+    (14, 4),
+    (15, 6),
+    (16, 1),
+    (17, 5),
+    (18, 6),
+    (19, 1),
+    (20, 9);
+
+--CREATE TABLE NoticiasMásVistas (
+ --   idNoticia INT PRIMARY KEY,
+  --  FOREIGN KEY (idNoticia) REFERENCES Noticias(idNoticia)
+--);
+
+
+
+CREATE TABLE Blogs (
+    idBlog INT PRIMARY KEY,
+    Cuerpo VARCHAR(500) NOT NULL,
+    idCategoría INT NOT NULL,
+    FOREIGN KEY (idCategoría) REFERENCES Categorías(idCategoría),
+    FOREIGN KEY (idBlog) REFERENCES Publicaciones(idPublicacion)
+);
+
+INSERT INTO Blogs (idBlog, Cuerpo, idCategoría)
+VALUES
+    (1, 'El último lanzamiento espacial de SpaceX genera entusiasmo entre los fanáticos de la tecnología.', 7),
+    (2, 'Consejos y estrategias para mejorar tu salud mental y bienestar.', 6),
+    (3, 'Análisis de los últimos avances en inteligencia artificial y su impacto en diferentes industrias.', 7),
+    (4, 'Resumen de los principales acontecimientos deportivos de la semana.', 2),
+    (5, 'Recetas y consejos para una alimentación saludable y equilibrada.', 6),
+    (6, 'Las últimas noticias y novedades en el mundo del entretenimiento.', 3),
+    (7, 'Exploración espacial y descubrimientos científicos más recientes.', 5),
+    (8, 'Tendencias y análisis en el mercado financiero y económico.', 4),
+    (9, 'Reseñas de películas, series y eventos del mundo del cine.', 3),
+    (10, 'Avances médicos y descubrimientos en el campo de la salud.', 6);
+
+
+CREATE TABLE TiposSuscripciones (
+    idTipoSuscripción SERIAL PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Precio DECIMAL NOT NULL,
+    Descripción VARCHAR(100) NOT NULL
+);
+
+INSERT INTO TiposSuscripciones (Nombre, Precio, Descripción)
+VALUES ('Suscripción mensual', 29000, 'Acceso ilimitado por un mes.'),
+       ('Suscripción anual', 155000, 'Acceso ilimitado por un año.'),
+       ('Suscripción premium', 69000, 'Acceso ilimitado y exclusivo a contenido premium por un mes.'),
+       ('Suscripción premium anual', 389000, 'Acceso ilimitado y exclusivo a contenido premium por un año.');
+
+CREATE TABLE Suscripciones (
+    idSuscripción SERIAL PRIMARY KEY,
+    idTipoSuscripción INT NOT NULL, 
+    PrecioPagado DECIMAL NOT NULL,
+    FechaInicio DATE NOT NULL,
+    FechaFin DATE NOT NULL,
+    idUsuario INT NOT NULL,
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (idTipoSuscripción) REFERENCES TiposSuscripciones(idTipoSuscripción)
+);
+
+INSERT INTO Suscripciones (idTipoSuscripción, PrecioPagado, FechaInicio, FechaFin, idUsuario)
+VALUES
+    (1, 29000, '2022-01-01', '2022-01-31', 1),
+    (1, 29000, '2022-02-01', '2022-02-28', 2),
+    (2, 155000, '2022-03-01', '2023-03-01', 3),
+    (2, 155000, '2023-03-02', '2024-03-01', 4),
+    (3, 69000, '2022-04-01', '2022-04-30', 5),
+    (3, 69000, '2022-05-01', '2022-05-31', 6),
+    (4, 389000, '2022-06-01', '2023-06-01', 7),
+    (4, 389000, '2023-06-02', '2024-06-01', 8),
+    (1, 29000, '2022-07-01', '2022-07-31', 9),
+    (1, 29000, '2022-08-01', '2022-08-31', 10),
+    (2, 155000, '2022-09-01', '2023-09-01', 11),
+    (2, 155000, '2023-09-02', '2024-09-01', 12),
+    (3, 69000, '2022-10-01', '2022-10-31', 13),
+    (3, 69000, '2022-11-01', '2022-11-30', 14),
+    (4, 389000, '2022-12-01', '2023-12-01', 15),
+    (4, 389000, '2023-12-02', '2024-12-01', 16),
+    (1, 29000, '2023-01-01', '2023-01-31', 17),
+    (1, 29000, '2023-02-01', '2023-02-28', 18),
+    (2, 155000, '2023-03-01', '2024-03-01', 19),
+    (2, 155000, '2024-03-02', '2025-03-01', 20);
+
+CREATE TABLE Podcasts (
+idPodcast INT PRIMARY KEY,
+Duracion TIME NOT NULL,
+FOREIGN KEY (idPodcast) REFERENCES Publicaciones(idPublicacion)
+);
+
+INSERT INTO Podcasts (idPodcast, Duracion)
+VALUES
+    (1, '00:25:30'),
+    (2, '00:42:15'),
+    (3, '01:10:20'),
+    (4, '00:55:45'),
+    (5, '00:30:10'),
+    (6, '00:50:05'),
+    (7, '00:20:45'),
+    (8, '01:15:30'),
+    (9, '00:35:20'),
+    (10, '00:45:55'),
+    (11, '00:40:30'),
+    (12, '01:05:15'),
+    (13, '00:22:40'),
+    (14, '00:52:30'),
+    (15, '00:33:25'),
+    (16, '01:20:50'),
+    (17, '00:28:15');
+
+CREATE TABLE FuentesPublicaciones (
+    idFuente INT NOT NULL,
+    idpublicacion INT NOT NULL,
+    PRIMARY KEY (idFuente, idpublicacion),
+    FOREIGN KEY (idFuente) REFERENCES Fuentes(idFuente),
+    FOREIGN KEY (idpublicacion) REFERENCES Publicaciones(idpublicacion)
+);
+INSERT INTO FuentesPublicaciones (idFuente, idpublicacion)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8),
+    (9, 9),
+    (12, 11),
+    (11, 11),
+    (12, 12),
+    (13, 13),
+    (14, 14),
+    (15, 15),
+    (16, 16),
+    (17, 17);
+
+CREATE TABLE Comentarios (
+    idNoticia INT NOT NULL,
+    idUsuario INT NOT NULL,
+    comentario VARCHAR(200) NULL,
+    PRIMARY KEY (idNoticia, idUsuario),
+    FOREIGN KEY (idNoticia) REFERENCES Noticias(idNoticia),
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
+);
+
+INSERT INTO Comentarios (idNoticia, idUsuario, comentario)
+VALUES
+    (1, 1, 'Interesante artículo'),
+    (1, 2, 'Buen análisis'),
+    (2, 3, 'Me gustó la información'),
+    (2, 4, NULL),
+    (2, 5, 'Excelente investigación'),
+    (3, 1, NULL),
+    (3, 3, 'Podrían profundizar más'),
+    (4, 2, 'Gran trabajo'),
+    (4, 5, 'No estoy de acuerdo con algunas conclusiones'),
+    (5, 1, 'Información útil'),
+    (6, 4, NULL),
+    (7, 2, 'Me hubiera gustado más contexto'),
+    (7, 3, 'Muy completo'),
+    (7, 5, 'Opiniones interesantes'),
+    (8, 1, 'Excelente artículo'),
+    (8, 4, NULL),
+    (9, 3, 'Me parece importante'),
+    (9, 5, 'Faltan más datos'),
+    (10, 2, 'Buena fuente'),
+    (10, 4, NULL);
+
